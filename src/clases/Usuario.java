@@ -1,42 +1,103 @@
 package clases;
 
+import utils.RutValidador;
+
 public abstract class Usuario {
+    private String nombre_completo;
+    private String rut;
+    private char sexo;
+    private String carrera;
+    private String prestamo = "0";
 
-    private String nombre;
-    private String Apellido;
-    private String RUT;
-
-    public Usuario(String nombre, String apellido, String RUT) {
-        this.nombre = nombre;
-        Apellido = apellido;
-        this.RUT = RUT;
+    public Usuario(String nombre_completo, String rut, char sexo, String carrera) {
+        this.nombre_completo = nombre_completo;
+        this.rut = rut;
+        this.sexo = sexo;
+        this.carrera = carrera;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombre_completo() {
+        return nombre_completo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre_completo(String nombre_completo) {
+        this.nombre_completo = nombre_completo;
     }
 
-    public String getApellido() {
-        return Apellido;
+    public String getRut() {
+        return rut;
     }
 
-    public void setApellido(String apellido) {
-        Apellido = apellido;
+    public void setRut(String rut) throws Exception {
+        if (validarRut(rut)) {
+            this.rut = rut;
+        } else {
+            throw new Exception("Falló la creación del User, rut incorrecto.");
+        }
     }
 
-    public String getRUT() {
-        return RUT;
+    public char getSexo() {
+        return sexo;
     }
 
-    public void setRUT(String RUT) {
-        this.RUT = RUT;
+    @SuppressWarnings("ConditionAlwaysTrueOrFalse")
+    public void setSexo(char sexo) {
+        sexo = Character.toUpperCase(sexo);
+        if (sexo != 'F' || sexo != 'M') {
+            System.out.println("Ingrese un sexo válido");
+        } else {
+            this.sexo = sexo;
+        }
     }
 
-    public void validarRut() {
-        //TODO
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
+    public String getPrestamo() {
+        return prestamo;
+    }
+
+    public void setPrestamo(String prestamo) {
+        this.prestamo = prestamo;
+    }
+
+    public void editarUsuario(String nombre_completo, String rut, char sexo){
+            this.nombre_completo = nombre_completo;
+            //TODO Validar si el rut no está repetido
+            this.rut = validarRut(rut) ? rut : "";
+            //TODO Validar si el genero se puede asignar
+            setSexo(sexo);
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "nombre_completo='" + nombre_completo + '\'' +
+                ", rut='" + rut + '\'' +
+                ", sexo=" + sexo +
+                ", carrera='" + carrera + '\'' +
+                ", prestamo='" + prestamo + '\'' +
+                '}';
+    }
+
+    private Boolean validarRut(String rut) {
+        if (RutValidador.validarRut(rut)) {
+            System.out.println("Rut no valido");
+            return false;
+        }
+        return true;
+    }
+
+    public void crearUsuario() {
+        System.out.println("prueba");
+    }
+
+    public void eliminarUsuario() {
+        System.out.println("eliminando");
     }
 }
