@@ -16,6 +16,11 @@ public abstract class Usuario {
         this.carrera = carrera;
     }
 
+    //Constructor vacio para creación externa
+    public Usuario() {
+
+    }
+
     public String getNombre_completo() {
         return nombre_completo;
     }
@@ -43,7 +48,7 @@ public abstract class Usuario {
     @SuppressWarnings("ConditionAlwaysTrueOrFalse")
     public void setSexo(char sexo) {
         sexo = Character.toUpperCase(sexo);
-        if (sexo != 'F' || sexo != 'M') {
+        if (sexo != 'F' && sexo != 'M') {
             System.out.println("Ingrese un sexo válido");
         } else {
             this.sexo = sexo;
@@ -87,14 +92,15 @@ public abstract class Usuario {
 
     private Boolean validarRut(String rut) {
         if (RutValidador.validarRut(rut)) {
-            System.out.println("Rut no valido");
-            return false;
+            this.rut = rut;
+            return true;
         }
-        return true;
+        System.out.println("Rut incorrecto");
+        return false;
     }
 
-    public void crearUsuario() {
-        System.out.println("prueba");
+    public Usuario crearUsuario(String nombre_completo, String rut, char sexo, String carrera) throws Exception {
+        return this;
     }
 
     public void eliminarUsuario() {
