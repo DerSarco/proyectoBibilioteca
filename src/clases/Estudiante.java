@@ -1,5 +1,7 @@
 package clases;
 
+import java.util.Map;
+
 public class Estudiante extends Usuario {
     private String carrera_cursando;
 
@@ -14,11 +16,7 @@ public class Estudiante extends Usuario {
 
 
     @Override
-    public Usuario crearUsuario(String nombre_completo, String rut, char sexo, String carrera) throws Exception {
-        this.setNombre_completo(nombre_completo);
-        this.setSexo(sexo);
-        this.setCarrera(carrera);
-        this.setRut(rut);
-        return Estudiante.this;
+    public void crearUsuario(Map<String, Object> usuario) throws Exception {
+        super.crearUsuario(usuario);
     }
 }

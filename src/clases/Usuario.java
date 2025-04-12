@@ -2,6 +2,8 @@ package clases;
 
 import utils.RutValidador;
 
+import java.util.Map;
+
 public abstract class Usuario {
     private String nombre_completo;
     private String rut;
@@ -71,12 +73,12 @@ public abstract class Usuario {
         this.prestamo = prestamo;
     }
 
-    public void editarUsuario(String nombre_completo, String rut, char sexo){
-            this.nombre_completo = nombre_completo;
-            //TODO Validar si el rut no está repetido
-            this.rut = validarRut(rut) ? rut : "";
-            //TODO Validar si el genero se puede asignar
-            setSexo(sexo);
+    public void editarUsuario(String nombre_completo, String rut, char sexo) {
+        this.nombre_completo = nombre_completo;
+        //TODO Validar si el rut no está repetido
+        this.rut = validarRut(rut) ? rut : "";
+        //TODO Validar si el genero se puede asignar
+        setSexo(sexo);
     }
 
     @Override
@@ -99,8 +101,11 @@ public abstract class Usuario {
         return false;
     }
 
-    public Usuario crearUsuario(String nombre_completo, String rut, char sexo, String carrera) throws Exception {
-        return this;
+    public void crearUsuario(Map<String, Object> usuario) throws Exception {
+        this.nombre_completo = usuario.get("nombre_completo").toString();
+        this.rut = usuario.get("rut").toString();
+        this.sexo = usuario.get("sexo").toString().charAt(0);
+        this.carrera = usuario.get("carrera").toString();
     }
 
     public void eliminarUsuario() {
