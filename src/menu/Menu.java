@@ -19,13 +19,30 @@ public class Menu {
                         MenuAcciones.crearUsuario();
                         break;
                     case 2:
-                        MenuAcciones.eliminarUsuario();
+                        MenuAcciones.editarUsuario();
                         break;
                     case 3:
-                        MenuAcciones.imprimirUsuarios();
+                        MenuAcciones.eliminarUsuario();
                         break;
                     case 4:
-                        System.out.println("Imprimiendo opcion 4");
+                        MenuAcciones.imprimirUsuarios();
+                        break;
+                    case 5:
+                        MenuAcciones.realizarPrestamo();
+                        break;
+                    case 6:
+                        MenuAcciones.realizarDevolucion();
+                        break;
+                    case 7:
+                        MenuAcciones.crearLibro();
+                        break;
+                    case 8:
+                        MenuAcciones.eliminarLibro();
+                        break;
+                    case 9:
+                        MenuAcciones.imprimirLibros();
+                        break;
+                    case 10:
                         System.out.println("Saliendo...");
                         continuar = false;
                         break;
@@ -46,13 +63,21 @@ public class Menu {
         System.out.println("Nueva Biblioteca UNAB");
         System.out.println("-----------------------");
         System.out.println("\n");
-        System.out.println("Seleccione una opcion");
+        System.out.println("Seleccione una opción");
         System.out.println("\n");
         System.out.println("Menu");
-        System.out.println("-----------------------");
+        System.out.println("--------Usuario--------");
         System.out.println("1. Crear Usuario");
-        System.out.println("2. Eliminar Usuario");
-        System.out.println("3. Ver Usuarios");
-        System.out.println("4. Opcion 4 - Salir");
+        System.out.println("2. Editar Usuario");
+        System.out.println("3. Eliminar Usuario");
+        System.out.println("4. Ver usuarios existentes");
+        System.out.println("--------Préstamo--------");
+        System.out.println("5. Realizar Préstamo");
+        System.out.println("6. Realizar Devolución");
+        System.out.println("--------Libro--------");
+        System.out.println("7. Crear Libro");
+        System.out.println("8. Eliminar Libro");
+        System.out.println("9. Ver libros existentes");
+        System.out.println("10. Salir del programa");
     }
 }

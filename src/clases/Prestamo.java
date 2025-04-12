@@ -13,6 +13,7 @@ public class Prestamo {
     private int multa;
 
     public Prestamo(String isbn_libro, String rut_usuario, LocalDateTime fecha_devolucion, LocalDateTime fecha_prestamo, int dias_prestamo, int multa) {
+        //Al crear préstamo, se debería crear también la tarjeta asociada al préstamo
         this.isbn_libro = isbn_libro;
         this.rut_usuario = rut_usuario;
         this.fecha_devolucion = fecha_devolucion;
