@@ -17,6 +17,7 @@ public class MenuAcciones {
     private static String profesion;
     private static String grado;
 
+
     public static void crearUsuario() {
         Scanner sc = new Scanner(System.in);
         try {
@@ -84,6 +85,10 @@ public class MenuAcciones {
         return usuarios;
     }
 
+    public static void editarUsuario() {
+
+        System.out.println("actualizando...");
+    }
 
     public static void eliminarUsuario() {
         System.out.println("Ingrese rut de usuario a eliminar: ");
@@ -107,10 +112,29 @@ public class MenuAcciones {
     }
 
     public static void imprimirUsuarios() {
-        ArrayList<Usuario> usuarios = usuarioMock.getUsers();
-        for (Usuario usuario : usuarios) {
-            System.out.println(usuario.toString() + usuario.getClass().getCanonicalName());
-        }
+        System.out.println("Lista usuarios");
     }
+
+    public static void realizarPrestamo() {
+        System.out.println("préstamo");
+    }
+
+    public static void realizarDevolucion() {
+        System.out.println("devolucion");
+    }
+
+    public static void crearLibro() {
+        System.out.println("libro");
+    }
+
+    public static void eliminarLibro() {
+        System.out.println("Eliminando libro");
+    }
+
+    public static void imprimirLibros() {
+        System.out.println("Eliminando libro");
+    }
+
+
 
 }

@@ -1,7 +1,7 @@
 package clases;
-
 import utils.RutValidador;
-
+import mock.UsuarioMock;
+import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class Usuario {
@@ -10,6 +10,7 @@ public abstract class Usuario {
     private char sexo;
     private String carrera;
     private String prestamo = "0";
+    static UsuarioMock usuarioMock = UsuarioMock.getInstance();
 
     public Usuario(String nombre_completo, String rut, char sexo, String carrera) {
         this.nombre_completo = nombre_completo;
@@ -73,11 +74,11 @@ public abstract class Usuario {
         this.prestamo = prestamo;
     }
 
-    public void editarUsuario(String nombre_completo, String rut, char sexo) {
-        this.nombre_completo = nombre_completo;
-        //TODO Validar si el rut no está repetido
-        this.rut = validarRut(rut) ? rut : "";
-        //TODO Validar si el genero se puede asignar
+    public void editarUsuario(String rut) {
+
+
+
+
         setSexo(sexo);
     }
 
@@ -106,6 +107,13 @@ public abstract class Usuario {
         this.rut = usuario.get("rut").toString();
         this.sexo = usuario.get("sexo").toString().charAt(0);
         this.carrera = usuario.get("carrera").toString();
+    }
+
+    public static void imprimirUsuarios() {
+        ArrayList<Usuario> usuarios = usuarioMock.getUsers();
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario.toString() + usuario.getClass().getCanonicalName());
+        }
     }
 
     public void eliminarUsuario() {
