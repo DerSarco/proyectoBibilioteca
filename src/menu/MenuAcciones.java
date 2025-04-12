@@ -111,7 +111,9 @@ public class MenuAcciones {
         }
     }
 
-
+    public static void imprimirUsuarios() {
+        System.out.println("Lista usuarios");
+    }
 
     public static void realizarPrestamo() {
         System.out.println("préstamo");
