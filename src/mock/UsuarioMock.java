@@ -34,6 +34,7 @@ public class UsuarioMock {
     public void eliminarUsuarioDeLista(String rut) {
         usuarios.removeIf(usuario -> usuario.getRut().equals(rut));
     }
+
 }
 
 

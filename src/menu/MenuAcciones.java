@@ -4,6 +4,7 @@ import clases.Docente;
 import clases.Estudiante;
 import clases.Usuario;
 import mock.UsuarioMock;
+import clases.Usuario;
 import utils.RutValidador;
 
 import java.util.*;
@@ -16,7 +17,6 @@ public class MenuAcciones {
     private static String carrera;
     private static String profesion;
     private static String grado;
-
 
     public static void crearUsuario() {
         Scanner sc = new Scanner(System.in);
@@ -86,8 +86,29 @@ public class MenuAcciones {
     }
 
     public static void editarUsuario() {
-
-        System.out.println("actualizando...");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese rut de usuario a editar: ");
+        rut = sc.nextLine();
+        ArrayList<Usuario> usuarios = usuarioMock.getUsers();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getRut().equals(rut)) {
+                System.out.println("Usuario encontrado: ");
+                System.out.println(usuario.toString());
+                System.out.println("----Datos a editar----");
+                System.out.println("Nombre y apellido: ");
+                String nombreCompleto = sc.nextLine();
+                System.out.println("Sexo (F o M): ");
+                String sexoInput = sc.nextLine();
+                char sexo = sexoInput.charAt(0);
+                System.out.println("Carrera: ");
+                String carrera = sc.nextLine();
+                System.out.println("¿Tiene un préstamo asociado?: ");
+                String prestamo = sc.nextLine();
+                usuario.editarUsuario(rut, nombreCompleto, sexo, carrera, prestamo);
+                return;
+            }
+        }
+        System.out.println("Usuario con RUT " + rut + " no encontrado.");
     }
 
     public static void eliminarUsuario() {
@@ -112,7 +133,10 @@ public class MenuAcciones {
     }
 
     public static void imprimirUsuarios() {
-        System.out.println("Lista usuarios");
+        ArrayList<Usuario> usuarios = usuarioMock.getUsers();
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario.toString() + usuario.getClass().getCanonicalName());
+        }
     }
 
     public static void realizarPrestamo() {

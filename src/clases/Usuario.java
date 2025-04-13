@@ -10,7 +10,7 @@ public abstract class Usuario {
     private char sexo;
     private String carrera;
     private String prestamo = "0";
-    static UsuarioMock usuarioMock = UsuarioMock.getInstance();
+    private UsuarioMock usuarioMock = UsuarioMock.getInstance();
 
     public Usuario(String nombre_completo, String rut, char sexo, String carrera) {
         this.nombre_completo = nombre_completo;
@@ -74,14 +74,6 @@ public abstract class Usuario {
         this.prestamo = prestamo;
     }
 
-    public void editarUsuario(String rut) {
-
-
-
-
-        setSexo(sexo);
-    }
-
     @Override
     public String toString() {
         return "Usuario{" +
@@ -109,10 +101,19 @@ public abstract class Usuario {
         this.carrera = usuario.get("carrera").toString();
     }
 
-    public static void imprimirUsuarios() {
-        ArrayList<Usuario> usuarios = usuarioMock.getUsers();
+    public void editarUsuario(String rut, String nombre_completo, char sexo, String carrera, String prestamo) {
+        ArrayList<Usuario> usuarios = UsuarioMock.getInstance().getUsers();
         for (Usuario usuario : usuarios) {
-            System.out.println(usuario.toString() + usuario.getClass().getCanonicalName());
+            if (usuario.getRut().equals(rut)) {
+                usuario.setNombre_completo(nombre_completo);
+                usuario.setSexo(sexo);
+                usuario.setCarrera(carrera);
+                usuario.setPrestamo(prestamo);
+                System.out.println("------------------------------");
+                System.out.println("Usuario actualizado con éxito");
+                System.out.println("------------------------------");
+                System.out.println(usuario.toString());
+            }
         }
     }
 
