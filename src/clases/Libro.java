@@ -1,6 +1,13 @@
 package clases;
 
+import mock.LibrosMock;
+
+import java.util.ArrayList;
+import java.util.Map;
+
 public class Libro {
+    LibrosMock libroMock = LibrosMock.getInstance();
+
     private String isbn_libro;
     private String titulo;
     private String autor;
@@ -15,6 +22,9 @@ public class Libro {
         this.imagenLibro = imagenLibro;
         this.cantidad_en_biblioteca = cantidad_en_biblioteca;
         this.cantidad_disponible_prestamo = cantidad_disponible_prestamo;
+    }
+
+    public Libro() {
     }
 
     public String getIsbn_libro() {
@@ -76,15 +86,22 @@ public class Libro {
                 ", cantidad_disponible_prestamo=" + cantidad_disponible_prestamo +
                 '}';
     }
-    
-    public void crearLibro() {
-        System.out.println("crear libro");
+
+    public void crearLibro(Map<String, Object> libro) throws Exception {
+        libroMock.agregarLibroALaLista(new Libro(
+                libro.get("isbn_libro").toString(),
+                libro.get("titulo").toString(),
+                libro.get("autor").toString(),
+                libro.get("imagenLibro").toString(),
+                Integer.parseInt((String) libro.get("cantidad_en_biblioteca")),
+                Integer.parseInt((String) libro.get("cantidad_disponible_prestamo"))
+        ));
     }
 
-    public void eliminarLibro() {
-        System.out.println("eliminando");
+    public void eliminarLibro(String isbn_libro) throws Exception {
+        libroMock.eliminarLibroLista(isbn_libro);
     }
-    
+
     public Boolean estaDisponible() {
         return null;
     }

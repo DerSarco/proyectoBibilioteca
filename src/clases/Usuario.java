@@ -1,6 +1,9 @@
 package clases;
+
+import com.sun.security.auth.UnixNumericUserPrincipal;
 import utils.RutValidador;
 import mock.UsuarioMock;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -77,8 +80,6 @@ public abstract class Usuario {
     public void editarUsuario(String rut) {
 
 
-
-
         setSexo(sexo);
     }
 
@@ -109,6 +110,10 @@ public abstract class Usuario {
         this.carrera = usuario.get("carrera").toString();
     }
 
+
+    //TODO: Hay un tema, para poder llamar esta función tenemos que a juro
+    // tener una clase Usuario, cualquiera para poder llamar a esto, no seria mejor
+    // dejar la llamada a imprimir usuario directamente?
     public static void imprimirUsuarios() {
         ArrayList<Usuario> usuarios = usuarioMock.getUsers();
         for (Usuario usuario : usuarios) {
@@ -116,7 +121,7 @@ public abstract class Usuario {
         }
     }
 
-    public void eliminarUsuario() {
-        System.out.println("eliminando");
+    public void eliminarUsuario(Usuario usuario) {
+        usuarioMock.eliminarUsuarioDeLista(usuario.getRut());
     }
 }
