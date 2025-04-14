@@ -2,7 +2,9 @@ package menu;
 
 import clases.Docente;
 import clases.Estudiante;
+import clases.Libro;
 import clases.Usuario;
+import mock.LibrosMock;
 import mock.UsuarioMock;
 import clases.Usuario;
 import utils.RutValidador;
@@ -148,17 +150,60 @@ public class MenuAcciones {
     }
 
     public static void crearLibro() {
-        System.out.println("libro");
+        try {
+            Scanner sc = new Scanner(System.in);
+            Map<String, Object> libroData = new HashMap<>();
+            Libro libro = new Libro();
+            System.out.println("Ingrese el codigo (ISBN) del libro: ");
+            //TODO: Validar que no esté repedito el ISBN (Kenny)
+            String isbn = sc.nextLine();
+            libroData.put("isbn_libro", isbn);
+            System.out.println("Ingrese el título del libro: ");
+            String titulo = sc.nextLine();
+            libroData.put("titulo", titulo);
+            System.out.println("Ingrese el autor del libro: ");
+            String autor = sc.nextLine();
+            libroData.put("autor", autor);
+            System.out.println("Ingrese la URL de la imagen del libro: ");
+            String url = sc.nextLine();
+            libroData.put("imagenLibro", url);
+            System.out.println("Ingrese la cantidad de disponibles en biblioteca (Solo números): ");
+            int cantidad_biblioteca = sc.nextInt();
+            libroData.put("cantidad_en_biblioteca", cantidad_biblioteca);
+            System.out.println("Ingrese la cantidad disponible para prestamo (Solo números): ");
+            int cantidad_prestamo = sc.nextInt();
+            libroData.put("cantidad_disponible_prestamo", cantidad_prestamo);
+            libro.crearLibro(libroData);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public static void eliminarLibro() {
-        System.out.println("Eliminando libro");
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Ingrese el codigo (ISBN) del libro a eliminar: ");
+            String isbn = sc.nextLine();
+            ArrayList<Libro> libros = LibrosMock.getInstance().getLibros();
+            for (Libro libro : libros) {
+                if (libro.getIsbn_libro().equals(isbn)) {
+                    libro.eliminarLibro(isbn);
+                    System.out.println("Libro eliminado con exito!");
+                    return;
+                }
+            }
+            System.out.println("El libro no se ha eliminado");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void imprimirLibros() {
-        System.out.println("Eliminando libro");
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Libro> libros = LibrosMock.getInstance().getLibros();
+        libros.forEach(libro -> System.out.println(libro.getIsbn_libro()));
+        System.out.println("Aprete cualquier tecla para continuar...");
+        sc.nextLine();
     }
-
-
-
 }
