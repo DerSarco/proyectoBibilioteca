@@ -13,7 +13,7 @@ public abstract class Usuario {
     private char sexo;
     private String carrera;
     private String prestamo = "0";
-    static UsuarioMock usuarioMock = UsuarioMock.getInstance();
+    private UsuarioMock usuarioMock = UsuarioMock.getInstance();
 
     public Usuario(String nombre_completo, String rut, char sexo, String carrera) {
         this.nombre_completo = nombre_completo;
@@ -76,13 +76,7 @@ public abstract class Usuario {
     public void setPrestamo(String prestamo) {
         this.prestamo = prestamo;
     }
-
-    public void editarUsuario(String rut) {
-
-
-        setSexo(sexo);
-    }
-
+  
     @Override
     public String toString() {
         return "Usuario{" +
@@ -109,8 +103,7 @@ public abstract class Usuario {
         this.sexo = usuario.get("sexo").toString().charAt(0);
         this.carrera = usuario.get("carrera").toString();
     }
-
-
+  
     //TODO: Hay un tema, para poder llamar esta función tenemos que a juro
     // tener una clase Usuario, cualquiera para poder llamar a esto, no seria mejor
     // dejar la llamada a imprimir usuario directamente?
@@ -118,6 +111,22 @@ public abstract class Usuario {
         ArrayList<Usuario> usuarios = usuarioMock.getUsers();
         for (Usuario usuario : usuarios) {
             System.out.println(usuario.toString() + usuario.getClass().getCanonicalName());
+        }
+    }
+  
+    public void editarUsuario(String rut, String nombre_completo, char sexo, String carrera, String prestamo) {
+        ArrayList<Usuario> usuarios = UsuarioMock.getInstance().getUsers();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getRut().equals(rut)) {
+                usuario.setNombre_completo(nombre_completo);
+                usuario.setSexo(sexo);
+                usuario.setCarrera(carrera);
+                usuario.setPrestamo(prestamo);
+                System.out.println("------------------------------");
+                System.out.println("Usuario actualizado con éxito");
+                System.out.println("------------------------------");
+                System.out.println(usuario.toString());
+            }
         }
     }
 
