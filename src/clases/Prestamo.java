@@ -3,6 +3,7 @@ package clases;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Prestamo {
     private String isbn_libro;
@@ -87,6 +88,22 @@ public class Prestamo {
             this.dias_prestamo = 20;
         } else {
             this.dias_prestamo = 10;
+        }
+    }
+
+    public void calcularMulta(Usuario usuario){
+        // Calcular la fecha límite
+        LocalDateTime fechaLimite = getFecha_prestamo().plusDays(getDias_prestamo());
+
+        if (getFecha_devolucion().isAfter(fechaLimite)) {
+            long diasRetraso = ChronoUnit.DAYS.between(fechaLimite, getFecha_devolucion());
+
+            int multaPorDia = (usuario instanceof Docente) ? 50 : 100;
+            int multaTotal = (int) diasRetraso * multaPorDia;
+
+            setMulta(multaTotal);
+        } else {
+            setMulta(0);
         }
     }
 
