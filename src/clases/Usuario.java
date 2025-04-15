@@ -115,7 +115,7 @@ public abstract class Usuario {
     }
   
     public void editarUsuario(String rut, String nombre_completo, char sexo, String carrera, String prestamo) {
-        ArrayList<Usuario> usuarios = UsuarioMock.getInstance().getUsers();
+        ArrayList<Usuario> usuarios = usuarioMock.getUsers();
         for (Usuario usuario : usuarios) {
             if (usuario.getRut().equals(rut)) {
                 usuario.setNombre_completo(nombre_completo);
