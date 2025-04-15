@@ -6,7 +6,6 @@ import clases.Libro;
 import clases.Usuario;
 import mock.LibrosMock;
 import mock.UsuarioMock;
-import clases.Usuario;
 import utils.RutValidador;
 
 import java.util.*;
@@ -19,12 +18,20 @@ public class MenuAcciones {
     private static String carrera;
     private static String profesion;
     private static String grado;
+    
+    private final static String continuar_string = "Presione 'Enter' para continuar...";
 
     public static void crearUsuario() {
         Scanner sc = new Scanner(System.in);
         try {
-            System.out.println("Que tipo de usuario quiere crear? (1 - Docente | 2 - Estudiante): ");
+            System.out.println("Que tipo de usuario quiere crear? (1 - Docente | 2 - Estudiante | 3 - Cancelar): ");
             String tipo = sc.nextLine();
+            if (tipo.equals("3")) {
+                System.out.println("Creación de usuario cancelada!");
+                System.out.println(continuar_string);
+                sc.nextLine();
+                return;
+            }
             Map<String, Object> user = crearUsuarioDatosGenerico(tipo);
             if (user.isEmpty()) {
                 throw new Exception("Datos de usuario vacios.");
@@ -49,6 +56,8 @@ public class MenuAcciones {
             }
             System.out.println("Usuario creado con exito!");
             imprimirUsuarios();
+            System.out.println(continuar_string);
+            sc.nextLine();
         } catch (Exception e) {
             System.err.println("Something went wrong.");
             System.err.println(e.getMessage());
@@ -60,13 +69,14 @@ public class MenuAcciones {
         Map<String, Object> usuarios = new HashMap<>();
         try {
             String tipoUsuario = Objects.equals(tipo, "1") ? "Docente" : "Estudiante";
-            System.out.println("Ingrese su nombre y apellido del " + tipoUsuario + ": ");
+            System.out.println("Ingrese nombre y apellido del " + tipoUsuario + ": ");
             nombre = sc.nextLine();
             String[] nombreSplit = nombre.split(" ");
             if (nombreSplit.length == 1) {
                 throw new Exception("El nombre debe tener nombre y apellido.");
             }
-            System.out.println("Ingrese su rut sin puntos y con guión: ");
+            System.out.println("Ingrese su rut sin puntos y con guión: \n");
+            System.out.println("Ej: 10887987-1 \n");
             rut = sc.nextLine();
             if (!RutValidador.validarRut(rut)) {
                 throw new Exception("Rut no valido");
@@ -95,7 +105,7 @@ public class MenuAcciones {
         for (Usuario usuario : usuarios) {
             if (usuario.getRut().equals(rut)) {
                 System.out.println("Usuario encontrado: ");
-                System.out.println(usuario.toString());
+                System.out.println(usuario);
                 System.out.println("----Datos a editar----");
                 System.out.println("Nombre y apellido: ");
                 String nombreCompleto = sc.nextLine();
@@ -107,6 +117,8 @@ public class MenuAcciones {
                 System.out.println("¿Tiene un préstamo asociado?: ");
                 String prestamo = sc.nextLine();
                 usuario.editarUsuario(rut, nombreCompleto, sexo, carrera, prestamo);
+                System.out.println(continuar_string);
+                sc.nextLine();
                 return;
             }
         }
@@ -131,14 +143,19 @@ public class MenuAcciones {
                     System.out.println("Usuario no se a eliminado");
                     break;
             }
+            System.out.println(continuar_string);
+            sc.nextLine();
         }
     }
 
     public static void imprimirUsuarios() {
+        Scanner sc = new Scanner(System.in);
         ArrayList<Usuario> usuarios = usuarioMock.getUsers();
         for (Usuario usuario : usuarios) {
             System.out.println(usuario.toString() + usuario.getClass().getCanonicalName());
         }
+        System.out.println(continuar_string);
+        sc.nextLine();
     }
 
     public static void realizarPrestamo() {
@@ -202,8 +219,8 @@ public class MenuAcciones {
     public static void imprimirLibros() {
         Scanner sc = new Scanner(System.in);
         ArrayList<Libro> libros = LibrosMock.getInstance().getLibros();
-        libros.forEach(libro -> System.out.println(libro.getIsbn_libro()));
-        System.out.println("Aprete cualquier tecla para continuar...");
+        libros.forEach(libro -> System.out.println(libro.toString()));
+        System.out.println(continuar_string);
         sc.nextLine();
     }
 }
