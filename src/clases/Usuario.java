@@ -13,7 +13,7 @@ public abstract class Usuario {
     private char sexo;
     private String carrera;
     private String prestamo = "0";
-    private UsuarioMock usuarioMock = UsuarioMock.getInstance();
+    private static final UsuarioMock usuarioMock = UsuarioMock.getInstance();
 
     public Usuario(String nombre_completo, String rut, char sexo, String carrera) {
         this.nombre_completo = nombre_completo;
