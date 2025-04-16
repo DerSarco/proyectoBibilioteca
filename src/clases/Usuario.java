@@ -1,4 +1,5 @@
 package clases;
+
 import com.sun.security.auth.UnixNumericUserPrincipal;
 import utils.RutValidador;
 import mock.UsuarioMock;
@@ -12,7 +13,6 @@ public abstract class Usuario {
     private char sexo;
     private String carrera;
     private String prestamo = "0";
-    private static final UsuarioMock usuarioMock = UsuarioMock.getInstance();
 
     public Usuario(String nombre_completo, String rut, char sexo, String carrera) {
         this.nombre_completo = nombre_completo;
@@ -75,15 +75,15 @@ public abstract class Usuario {
     public void setPrestamo(String prestamo) {
         this.prestamo = prestamo;
     }
-  
+
     @Override
     public String toString() {
         return "Usuario{" +
                 "nombre_completo='" + nombre_completo + '\'' +
                 ", rut='" + rut + '\'' +
-                ", sexo=" + sexo +
-                ", carrera='" + carrera + '\'' +
-                ", prestamo='" + prestamo + '\'' +
+                ", sexo=" + getSexo() +
+                ", carrera='" + getCarrera() + '\'' +
+                ", prestamo='" + getPrestamo() + '\'' +
                 '}';
     }
 
@@ -102,18 +102,8 @@ public abstract class Usuario {
         this.sexo = usuario.get("sexo").toString().charAt(0);
         this.carrera = usuario.get("carrera").toString();
     }
-  
-    //TODO: Hay un tema, para poder llamar esta función tenemos que a juro
-    // tener una clase Usuario, cualquiera para poder llamar a esto, no seria mejor
-    // dejar la llamada a imprimir usuario directamente?
-    public static void imprimirUsuarios() {
-        ArrayList<Usuario> usuarios = usuarioMock.getUsers();
-        for (Usuario usuario : usuarios) {
-            System.out.println(usuario.toString() + usuario.getClass().getCanonicalName());
-        }
-    }
-  
-    public void editarUsuario(String rut, String nombre_completo, char sexo, String carrera, String prestamo) {
+
+    public void editarUsuario(UsuarioMock usuarioMock, String rut, String nombre_completo, char sexo, String carrera, String prestamo) {
         ArrayList<Usuario> usuarios = usuarioMock.getUsers();
         for (Usuario usuario : usuarios) {
             if (usuario.getRut().equals(rut)) {
@@ -124,12 +114,21 @@ public abstract class Usuario {
                 System.out.println("------------------------------");
                 System.out.println("Usuario actualizado con éxito");
                 System.out.println("------------------------------");
-                System.out.println(usuario.toString());
+                System.out.println(usuario);
             }
         }
     }
 
-    public void eliminarUsuario(Usuario usuario) {
+    public void eliminarUsuario(Usuario usuario, UsuarioMock usuarioMock) {
         usuarioMock.eliminarUsuarioDeLista(usuario.getRut());
+    }
+
+    public Boolean estaDuplicado(String rut, UsuarioMock usuarioMock) {
+        for (Usuario usuario : usuarioMock.getUsers()) {
+            if (usuario.getRut().equals(rut)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

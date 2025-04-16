@@ -1,12 +1,12 @@
 package clases;
 
 import mock.LibrosMock;
+import mock.UsuarioMock;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class Libro {
-    LibrosMock libroMock = LibrosMock.getInstance();
 
     private String isbn_libro;
     private String titulo;
@@ -87,7 +87,7 @@ public class Libro {
                 '}';
     }
 
-    public void crearLibro(Map<String, Object> libro) throws Exception {
+    public void crearLibro(Map<String, Object> libro, LibrosMock libroMock) throws Exception {
         libroMock.agregarLibroALaLista(new Libro(
                 libro.get("isbn_libro").toString(),
                 libro.get("titulo").toString(),
@@ -98,12 +98,22 @@ public class Libro {
         ));
     }
 
-    public void eliminarLibro(String isbn_libro) throws Exception {
-        libroMock.eliminarLibroLista(isbn_libro);
+    public void eliminarLibro(String isbn_libro, LibrosMock libroMock) throws Exception {
+        libroMock.getLibros().removeIf(libro -> libro.getIsbn_libro().equals(isbn_libro));
     }
 
     public Boolean estaDisponible() {
-        return null;
+        return cantidad_disponible_prestamo > 0;
     }
 
+    public Boolean estaDuplicado(String isbn, LibrosMock librosMock) {
+        for (Libro libro : librosMock.getLibros()) {
+            if (libro.getIsbn_libro().equals(isbn)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //TODO: Cantidad disponible debe ser mayor a cero y menor o igual a cantidad en biblioteca.
 }

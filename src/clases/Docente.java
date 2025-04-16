@@ -12,13 +12,20 @@ public class Docente extends Usuario {
         this.grado = grado;
     }
 
-    public Docente(String profesion, String grado) {
-        this.profesion = profesion;
-        this.grado = grado;
+    public Docente() {
     }
 
     @Override
     public void crearUsuario(Map<String, Object> usuario) throws Exception {
         super.crearUsuario(usuario);
+        this.profesion = usuario.get("profesion").toString();
+        this.grado = usuario.get("grado").toString();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + ", profesion=" + profesion
+                + ", grado=" + grado;
     }
 }

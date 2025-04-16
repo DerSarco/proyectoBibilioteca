@@ -35,10 +35,6 @@ public class LibrosMock {
     public void agregarLibroALaLista(Libro libro) {
         libros.add(libro);
     }
-
-    public void eliminarLibroLista(String isbn) {
-        libros.removeIf(libro -> libro.getIsbn_libro().equals(isbn));
-    }
 }
 
 

@@ -10,13 +10,19 @@ public class Estudiante extends Usuario {
         this.carrera_cursando = carrera_cursando;
     }
 
-    public Estudiante(String carrera_cursando) {
-        this.carrera_cursando = carrera_cursando;
+    public Estudiante() {
     }
 
 
     @Override
     public void crearUsuario(Map<String, Object> usuario) throws Exception {
         super.crearUsuario(usuario);
+        this.carrera_cursando = usuario.get("carrera_cursando").toString();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + ", carrera_cursando=" + carrera_cursando;
     }
 }
