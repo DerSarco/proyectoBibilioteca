@@ -34,15 +34,18 @@ public class Menu {
                         MenuAcciones.realizarDevolucion();
                         break;
                     case 7:
-                        MenuAcciones.crearLibro();
+                        MenuAcciones.imprimirPrestamos();
                         break;
                     case 8:
-                        MenuAcciones.eliminarLibro();
+                        MenuAcciones.crearLibro();
                         break;
                     case 9:
-                        MenuAcciones.imprimirLibros();
+                        MenuAcciones.eliminarLibro();
                         break;
                     case 10:
+                        MenuAcciones.imprimirLibros();
+                        break;
+                    case 11:
                         System.out.println("Saliendo...");
                         continuar = false;
                         break;
@@ -74,10 +77,11 @@ public class Menu {
         System.out.println("--------Préstamo--------");
         System.out.println("5. Realizar Préstamo");
         System.out.println("6. Realizar Devolución");
+        System.out.println("7. Listar Prestamos del Libro");
         System.out.println("--------Libro--------");
-        System.out.println("7. Crear Libro");
-        System.out.println("8. Eliminar Libro");
-        System.out.println("9. Ver libros existentes");
-        System.out.println("10. Salir del programa");
+        System.out.println("8. Crear Libro");
+        System.out.println("9. Eliminar Libro");
+        System.out.println("10. Ver libros existentes");
+        System.out.println("11. Salir del programa");
     }
 }
