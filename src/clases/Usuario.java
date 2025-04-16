@@ -1,5 +1,4 @@
 package clases;
-
 import com.sun.security.auth.UnixNumericUserPrincipal;
 import utils.RutValidador;
 import mock.UsuarioMock;

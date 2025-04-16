@@ -1,10 +1,8 @@
 package menu;
 
-import clases.Docente;
-import clases.Estudiante;
-import clases.Libro;
-import clases.Usuario;
+import clases.*;
 import mock.LibrosMock;
+import mock.PrestamoMock;
 import mock.UsuarioMock;
 import utils.RutValidador;
 
@@ -12,13 +10,15 @@ import java.util.*;
 
 public class MenuAcciones {
     static UsuarioMock usuarioMock = UsuarioMock.getInstance();
+    static LibrosMock librosMock = LibrosMock.getInstance();
+    static PrestamoMock prestamoMock = PrestamoMock.getInstance();
     private static String nombre;
     private static String rut;
     private static char sexo;
     private static String carrera;
     private static String profesion;
     private static String grado;
-    
+    private static Scanner sc = new Scanner(System.in);
     private final static String continuar_string = "Presione 'Enter' para continuar...";
 
     public static void crearUsuario() {
@@ -65,7 +65,6 @@ public class MenuAcciones {
     }
 
     public static Map<String, Object> crearUsuarioDatosGenerico(String tipo) {
-        Scanner sc = new Scanner(System.in);
         Map<String, Object> usuarios = new HashMap<>();
         try {
             String tipoUsuario = Objects.equals(tipo, "1") ? "Docente" : "Estudiante";
@@ -98,7 +97,6 @@ public class MenuAcciones {
     }
 
     public static void editarUsuario() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese rut de usuario a editar: ");
         rut = sc.nextLine();
         ArrayList<Usuario> usuarios = usuarioMock.getUsers();
@@ -128,7 +126,6 @@ public class MenuAcciones {
     public static void eliminarUsuario() {
         System.out.println("Ingrese rut de usuario a eliminar: ");
         String rut;
-        Scanner sc = new Scanner(System.in);
         rut = sc.nextLine();
         if (RutValidador.validarRut(rut)) {
             System.out.println("Estas seguro quiere eliminar el usuario? (1 - Si | 2 - No): )");
@@ -149,7 +146,6 @@ public class MenuAcciones {
     }
 
     public static void imprimirUsuarios() {
-        Scanner sc = new Scanner(System.in);
         ArrayList<Usuario> usuarios = usuarioMock.getUsers();
         for (Usuario usuario : usuarios) {
             System.out.println(usuario.toString() + usuario.getClass().getCanonicalName());
@@ -159,7 +155,47 @@ public class MenuAcciones {
     }
 
     public static void realizarPrestamo() {
-        System.out.println("préstamo");
+        Prestamo prestamo = new Prestamo();
+        System.out.println("Ingrese ISBN del libro: ");
+        String isbnLibro = sc.nextLine();
+        ArrayList<Libro> libros = librosMock.getLibros();
+        boolean libroEncontrado = false;
+        boolean usuarioEncontrado = false;
+
+        for (Libro libro : libros) {
+            if (libro.getIsbn_libro().equals(isbnLibro)) {
+                libroEncontrado = true;
+                if (libro.getCantidad_disponible_prestamo() >= 1) {
+                    System.out.println("Ingrese RUT del usuario: ");
+                    String rut = sc.nextLine();
+                    ArrayList<Usuario> usuarios = usuarioMock.getUsers();
+                    for (Usuario usuario : usuarios) {
+                        if (usuario.getRut().equals(rut)) {
+                            usuarioEncontrado = true;
+                            if (usuario.getPrestamo().equals("0")) {
+                                Prestamo nuevoPrestamo = prestamo.realizarPrestamo(libro, usuario);
+                                prestamoMock.prestamos.add(nuevoPrestamo);
+                                System.out.println(prestamoMock.getPrestamos());
+                            } else {
+                                System.out.println("El usuario ya tiene un préstamo activo");
+                            }
+                            break;
+                        }
+                    }
+
+                    if (!usuarioEncontrado) {
+                        System.out.println("Usuario no encontrado");
+                    }
+
+                } else {
+                    System.out.println("Libro no disponible para préstamo");
+                }
+            }
+        }
+
+        if (!libroEncontrado) {
+            System.out.println("Libro no encontrado");
+        }
     }
 
     public static void realizarDevolucion() {
@@ -168,7 +204,6 @@ public class MenuAcciones {
 
     public static void crearLibro() {
         try {
-            Scanner sc = new Scanner(System.in);
             Map<String, Object> libroData = new HashMap<>();
             Libro libro = new Libro();
             System.out.println("Ingrese el codigo (ISBN) del libro: ");
@@ -199,7 +234,6 @@ public class MenuAcciones {
 
     public static void eliminarLibro() {
         try {
-            Scanner sc = new Scanner(System.in);
             System.out.println("Ingrese el codigo (ISBN) del libro a eliminar: ");
             String isbn = sc.nextLine();
             ArrayList<Libro> libros = LibrosMock.getInstance().getLibros();
@@ -217,7 +251,6 @@ public class MenuAcciones {
     }
 
     public static void imprimirLibros() {
-        Scanner sc = new Scanner(System.in);
         ArrayList<Libro> libros = LibrosMock.getInstance().getLibros();
         libros.forEach(libro -> System.out.println(libro.toString()));
         System.out.println(continuar_string);

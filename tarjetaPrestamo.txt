@@ -1,0 +1,12 @@
+ Fecha Prestamo: 2025-04-15T20:39:12.252634 
+
+ Fecha devolución: 2025-05-05T20:39:12.252634 
+
+ ISBN Libro: 978-0061120084 
+
+ Nombre Libro: Matar a un ruiseñor 
+
+ RUT Usuario: 10234567-3 
+
+ Nombre Usuario: Juan Pablo Sanchez 
+

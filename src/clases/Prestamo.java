@@ -9,7 +9,7 @@ public class Prestamo {
     private String isbn_libro;
     private String rut_usuario;
     private LocalDateTime fecha_devolucion;
-    private LocalDateTime fecha_prestamo;
+    private LocalDateTime fecha_prestamo = LocalDateTime.now();
     private int dias_prestamo;
     private int multa;
 
@@ -18,9 +18,12 @@ public class Prestamo {
         this.isbn_libro = isbn_libro;
         this.rut_usuario = rut_usuario;
         this.fecha_devolucion = fecha_devolucion;
-        this.fecha_prestamo = LocalDateTime.now();
+        this.fecha_prestamo = fecha_prestamo;
         this.dias_prestamo = dias_prestamo;
         this.multa = multa;
+    }
+
+    public Prestamo() {
     }
 
     public String getIsbn_libro() {
@@ -51,10 +54,6 @@ public class Prestamo {
         return fecha_prestamo;
     }
 
-    public void setFecha_prestamo(LocalDateTime fecha_prestamo) {
-        this.fecha_prestamo = fecha_prestamo;
-    }
-
     public int getDias_prestamo() {
         return dias_prestamo;
     }
@@ -83,11 +82,11 @@ public class Prestamo {
             '}';
     }
 
-    public void calcularDiasPrestamo(Usuario usuario) {
+    public int calcularDiasPrestamo(Usuario usuario) {
         if (usuario instanceof Docente) {
-            this.dias_prestamo = 20;
+            return 20;
         } else {
-            this.dias_prestamo = 10;
+            return 10;
         }
     }
 
@@ -108,19 +107,51 @@ public class Prestamo {
     }
 
     //TODO sacaría esta función de acá y la meteria en otro lado.
-    private void crearTarjetaPrestamo() {
+    private void crearTarjetaPrestamo(Prestamo prestamo, Usuario usuario, Libro libro) {
         try {
-            FileWriter file = new FileWriter("tarjetaUser.txt");
+            FileWriter file = new FileWriter("tarjetaPrestamo.txt");
             String texto = String.format("""
                      Fecha Prestamo: %s \n
                      Fecha devolución: %s \n
-                     ISBN: %s \n
+                     ISBN Libro: %s \n
+                     Nombre Libro: %s \n
                      RUT Usuario: %s \n
-                    """, fecha_prestamo, fecha_devolucion, isbn_libro, rut_usuario);
+                     Nombre Usuario: %s \n
+                    """, prestamo.getFecha_prestamo(), prestamo.getFecha_devolucion(), prestamo.getIsbn_libro(), libro.getTitulo(), prestamo.getRut_usuario(), usuario.getNombre_completo());
             file.write(texto);
             file.close();
+            System.out.println("Tarjeta creada exitosamente");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public LocalDateTime calcularFechaDevolucion(LocalDateTime fechaPrestamo, int diasPrestamo) {
+        return fechaPrestamo.plusDays(diasPrestamo);
+    }
+
+    public Prestamo realizarPrestamo(Libro libro, Usuario usuario) {
+        usuario.setPrestamo(libro.getIsbn_libro());
+
+        int cantidad_disponible_libro = libro.getCantidad_disponible_prestamo() - 1;
+        libro.setCantidad_disponible_prestamo(cantidad_disponible_libro);
+
+        int dias_prestamo = this.calcularDiasPrestamo(usuario);
+
+        LocalDateTime fecha_prestamo = LocalDateTime.now();
+        LocalDateTime fecha_devolucion = calcularFechaDevolucion(fecha_prestamo, dias_prestamo);
+
+        Prestamo nuevoPrestamo = new Prestamo(
+            libro.getIsbn_libro(),
+            usuario.getRut(),
+            fecha_devolucion,
+            fecha_prestamo,
+            dias_prestamo,
+            0
+        );
+
+        crearTarjetaPrestamo(nuevoPrestamo, usuario, libro);
+
+        return nuevoPrestamo;
     }
 }
