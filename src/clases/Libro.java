@@ -102,10 +102,6 @@ public class Libro {
         libroMock.getLibros().removeIf(libro -> libro.getIsbn_libro().equals(isbn_libro));
     }
 
-    public Boolean estaDisponible() {
-        return cantidad_disponible_prestamo > 0;
-    }
-
     public Boolean estaDuplicado(String isbn, LibrosMock librosMock) {
         for (Libro libro : librosMock.getLibros()) {
             if (libro.getIsbn_libro().equals(isbn)) {
@@ -116,4 +112,14 @@ public class Libro {
     }
 
     //TODO: Cantidad disponible debe ser mayor a cero y menor o igual a cantidad en biblioteca.
+    public Boolean estaDisponible() {
+        return this.cantidad_disponible_prestamo > 0;
+    }
+
+    public void disminuirStock() {
+        if (cantidad_disponible_prestamo > 0) {
+            setCantidad_disponible_prestamo(-1);
+        }
+    }
+
 }
