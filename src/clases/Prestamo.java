@@ -131,8 +131,7 @@ public class Prestamo {
     public void realizarPrestamo(Libro libro, Usuario usuario) {
         usuario.setPrestamo(libro.getIsbn_libro());
 
-        int cantidad_disponible_libro = libro.getCantidad_disponible_prestamo() - 1;
-        libro.setCantidad_disponible_prestamo(cantidad_disponible_libro);
+        libro.disminuirStock();
 
         int dias_prestamo = this.calcularDiasPrestamo(usuario);
 
