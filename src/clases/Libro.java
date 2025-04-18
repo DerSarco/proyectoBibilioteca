@@ -78,12 +78,12 @@ public class Libro {
     @Override
     public String toString() {
         return "Libro{" +
-                "isbn_libro='" + isbn_libro + '\'' +
-                ", titulo='" + titulo + '\'' +
-                ", autor='" + autor + '\'' +
-                ", imagenLibro='" + imagenLibro + '\'' +
-                ", cantidad_en_biblioteca=" + cantidad_en_biblioteca +
-                ", cantidad_disponible_prestamo=" + cantidad_disponible_prestamo +
+                "isbn_libro='" + getIsbn_libro() + '\'' +
+                ", titulo='" + getTitulo() + '\'' +
+                ", autor='" + getAutor() + '\'' +
+                ", imagenLibro='" + getImagenLibro() + '\'' +
+                ", cantidad_en_biblioteca=" + getCantidad_en_biblioteca() +
+                ", cantidad_disponible_prestamo=" + getCantidad_disponible_prestamo() +
                 '}';
     }
 
