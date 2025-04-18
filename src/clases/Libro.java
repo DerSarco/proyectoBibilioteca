@@ -113,7 +113,7 @@ public class Libro {
 
     //TODO: Cantidad disponible debe ser mayor a cero y menor o igual a cantidad en biblioteca.
     public Boolean estaDisponible() {
-        return this.cantidad_disponible_prestamo > 0;
+        return this.cantidad_disponible_prestamo > 0 && this.cantidad_disponible_prestamo > this.cantidad_en_biblioteca;
     }
 
     public void disminuirStock() {
