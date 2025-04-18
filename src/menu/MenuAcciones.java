@@ -102,7 +102,8 @@ public class MenuAcciones {
     }
 
     public static void editarUsuario() {
-        System.out.println("Ingrese rut de usuario a editar: ");
+        System.out.println("Ingrese rut de usuario a editar sin puntos y con guión: ");
+        System.out.println("Ej: 10887987-1 \n");
         rut = sc.nextLine();
         ArrayList<Usuario> usuarios = usuarioMock.getUsers();
         for (Usuario usuario : usuarios) {
@@ -129,7 +130,8 @@ public class MenuAcciones {
     }
 
     public static void eliminarUsuario() {
-        System.out.println("Ingrese rut de usuario a eliminar: ");
+        System.out.println("Ingrese rut de usuario a eliminar sin puntos y con guión: ");
+        System.out.println("Ej: 10887987-1 \n");
         String rut;
         rut = sc.nextLine();
         if (RutValidador.validarRut(rut)) {
@@ -164,6 +166,8 @@ public class MenuAcciones {
                 System.out.println(estudiante + " " + estudiante.getClass().getCanonicalName());
             }
         }
+        System.out.println("Aprete Enter para continuar...");
+        sc.nextLine();
     }
 
     public static void realizarPrestamo() {
@@ -178,7 +182,8 @@ public class MenuAcciones {
             if (libro.getIsbn_libro().equals(isbnLibro)) {
                 libroEncontrado = true;
                 if (libro.estaDisponible()) {
-                    System.out.println("Ingrese RUT del usuario: ");
+                    System.out.println("Ingrese RUT del usuario sin puntos y con guión: ");
+                    System.out.println("Ej: 10887987-1 \n");
                     String rut = sc.nextLine();
                     ArrayList<Usuario> usuarios = usuarioMock.getUsers();
                     for (Usuario usuario : usuarios) {
@@ -229,8 +234,9 @@ public class MenuAcciones {
                     }
                 }
             }
-            if (libroEncontrado) {
-                System.out.println("Ingrese RUT del usuario: ");
+            if (libroEncontrado && !devolucionRealizada) {
+                System.out.println("Ingrese RUT del usuario sin puntos y con guión: ");
+                System.out.println("Ej: 10887987-1 \n");
                 String rutUsuario = sc.nextLine();
                 ArrayList<Usuario> usuarios = usuarioMock.getUsers();
                 for (Usuario usuario : usuarios) {
@@ -288,7 +294,6 @@ public class MenuAcciones {
             libroData.put("imagenLibro", url);
             System.out.println("Ingrese la cantidad de disponibles en biblioteca (Solo números): ");
             int cantidad_biblioteca = sc.nextInt();
-            //TODO: Cantidad disponible debe ser mayor a cero y menor o igual a cantidad en biblioteca.
             if (cantidad_biblioteca <= 0){
                 throw new Exception("La cantidad de disponibles debe ser mayor a 0");
             }

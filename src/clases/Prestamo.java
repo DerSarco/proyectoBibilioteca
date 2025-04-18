@@ -152,5 +152,8 @@ public class Prestamo {
         int cantidad_disponible_libro = libro.getCantidad_disponible_prestamo() + 1;
         libro.setCantidad_disponible_prestamo(cantidad_disponible_libro);
         calcularMulta();
+        if (multa > 0){
+            System.out.println("Debe pagar por concepto de atraso: $" + multa);
+        }
     }
 }
