@@ -90,7 +90,6 @@ public class Prestamo {
         }
     }
 
-    //TODO: Probar esta función
     public void calcularMulta(){
         // Calcular la fecha límite
         LocalDateTime fechaLimite = calcularFechaDevolucion(this.fecha_prestamo, this.dias_prestamo);
